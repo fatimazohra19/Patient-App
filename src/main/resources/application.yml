@@ -1,0 +1,37 @@
+spring:
+##Configaration mysql
+  ##datasource:
+#  liquibase:
+#    change-log: classpath:db/changelog/db.changelog-master.xml
+
+
+    #url: jdbc:mysql://localhost:3308/patients_db
+    #username: patient_hub
+    #password: Pass_24
+
+#  ##jpa:
+#    database: mysql
+#    hibernate:
+#        ddl-auto: update
+#        show-sql: true
+
+  ##Configaration postgres
+    datasource:
+      url: jdbc:postgresql://localhost:5433/Patients_db
+      username: patient_hub
+      password: Pass_24
+
+#    jpa:
+#      database: POSTGRESQL
+## (en genere pas le chéma le temp d'utilisation de liquibase le champ equibase qqui va genére )     hibernate:
+##        ddl-auto: update
+#      show-sql: true
+
+    org.hibernate:
+     # https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#envers
+      envers:
+        #default_schema: public
+        use_revision_entity_with_native_id: true
+        audit_strategy: org.hibernate.envers.strategy.internal.ValidityAuditStrategy
+        audit_strategy_validity_store_revend_timestamp: true
+
