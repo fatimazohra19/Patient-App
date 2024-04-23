@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 public class PatientDto {
     private Long id;
     @NotBlank
-    @Size(max = 100)
+    @Length(max = 100)
     private String name;
     private LocalDate birthdate;
     private Patient.Gender gender;

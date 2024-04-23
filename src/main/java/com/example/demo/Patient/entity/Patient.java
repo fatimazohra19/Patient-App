@@ -25,6 +25,7 @@ public class Patient extends CustomAbstractFullAuditable<Long> {
     @Column(length=100)
     @NotBlank @Length(max=100)
     private String name;
+    @Column(name = "birth_date")
     private LocalDate birthdate;
    /* @Column(length = 100);
     @NotBlank @Size(max = 100);*/

@@ -6,8 +6,12 @@ import com.example.demo.Patient.dto.PatientDto;
 import com.example.demo.Patient.dto.PatientNameDto;
 import com.example.demo.Patient.entity.Patient;
 import com.example.demo.Patient.mapper.PatientMapper;
+import com.example.demo.commons.exeptions.IncoherentException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +24,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class PatientService {
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
@@ -29,9 +34,11 @@ public class PatientService {
 //        System.out.println("page : "+pageable.getPageNumber());
 //        System.out.println("size : "+pageable.getPageSize());
 
+        log.trace("Search patient");
         //Activer un tri par default
         Sort sort = pageable.getSortOr(Sort.by("name"));
         if (pageable.isPaged()) {
+            log.debug("page:{}",pageable.getPageNumber());
             pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         } else {
             //bug framework ne supporte pas unpaged avec un tri
@@ -51,7 +58,12 @@ public class PatientService {
 
     }
 /**/
-    public DetailPatientDto Create(@Valid PatientDto patient) {
+    public DetailPatientDto Create(PatientDto patient) {
+        if(patient.getName().length()<=2){
+            String reason = "Le nom doit avoir min 3 caractere";
+            log.warn(reason);
+            throw new IncoherentException(reason);
+        }
         return patientMapper.toDto(patientRepository.save(patientMapper.fromDto(patient))) ;
 
     }
