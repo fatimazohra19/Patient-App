@@ -1,13 +1,24 @@
 package com.example.demo.Patient.entity;
 
+//import com.example.demo.commons.dto.Address;
+
+//import io.hypersistence.utils.hibernate.type.json.JsonType;
+
+//import com.example.demo.commons.jpa.entity.CustomAbstractFullAuditable;
 import com.example.demo.commons.jpa.entity.CustomAbstractFullAuditable;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Type;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import java.time.LocalDate;
 
 import java.time.LocalDate;
 
@@ -23,7 +34,8 @@ import java.time.LocalDate;
 public class Patient extends CustomAbstractFullAuditable<Long> {
 
     @Column(length=100)
-    @NotBlank @Length(max=100)
+    @NotBlank
+    @Length(max=100)
     private String name;
     @Column(name = "birth_date")
     private LocalDate birthdate;
@@ -40,9 +52,10 @@ public class Patient extends CustomAbstractFullAuditable<Long> {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Mutual mutual;
-    //@Type(JsonType.class)
-//    @Column(length = 100)
-//    private Address address;
+
+//    @Type(JsonType.class)
+//    @Column(columnDefinition ="jsonb")
+//  private Address address;
 
 
 

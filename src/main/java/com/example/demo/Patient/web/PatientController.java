@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,22 +49,24 @@ public class PatientController {
     public Page<Patient> findByGender(Patient.Gender gender,Pageable pageable) {
         return patientService.findByGender(gender,pageable);
     }
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Secured("ROLE_ADMIN")
     public DetailPatientDto create(@Valid @RequestBody PatientDto patient){
         return patientService.Create(patient);
 
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
     public Patient update(@PathVariable Long id, @Valid @RequestBody Patient patient){
         return patientService.update(id,patient);
     }
 
-
-
-    @DeleteMapping("/{id}")
+    @GetMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('ROLE_Admin')")
+    //@DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
 
     public void remove(@PathVariable Long id){

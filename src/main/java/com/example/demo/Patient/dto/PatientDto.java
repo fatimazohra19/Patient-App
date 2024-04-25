@@ -1,5 +1,6 @@
 package com.example.demo.Patient.dto;
 
+
 import com.example.demo.Patient.entity.Mutual;
 import com.example.demo.Patient.entity.Patient;
 import jakarta.validation.constraints.NotBlank;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 public class PatientDto {
     private Long id;
     @NotBlank
-    @Length(max = 100)
+    @Size(max = 100)
     private String name;
     private LocalDate birthdate;
     private Patient.Gender gender;

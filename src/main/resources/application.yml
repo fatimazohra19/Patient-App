@@ -1,4 +1,8 @@
 spring:
+  security:
+    user:
+      name: admin
+      password: 1234
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
   datasource:
